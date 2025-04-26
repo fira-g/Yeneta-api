@@ -8,7 +8,6 @@ const parentSchema = new mongoose.Schema(
     },
     kidsName: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
