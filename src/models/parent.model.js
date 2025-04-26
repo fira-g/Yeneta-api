@@ -14,6 +14,16 @@ const parentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+    resetToken: {
+      type: String,
+    },
+    tokenExpiration: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

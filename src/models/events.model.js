@@ -16,6 +16,10 @@ const eventSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    attendanceCapacity: {
+      type: Number,
+      required: true,
+    },
     bookedParents: [
       {
         parentID: {
