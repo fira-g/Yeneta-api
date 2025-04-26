@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import sendEmail from "../services/sendEmail.js";
 export const signup = async (req, res) => {
-  const { email, fullName, password } = req.body;
+  const { email, kidsName, fullName, password } = req.body;
   try {
     const existingUser = await Parent.findOne({ email });
     if (existingUser) {
@@ -16,6 +16,7 @@ export const signup = async (req, res) => {
     const newUser = new Parent({
       fullName,
       email,
+      kidsName,
       password: hashedPassword,
     });
     if (newUser) {
@@ -25,6 +26,7 @@ export const signup = async (req, res) => {
         message: "Account created successfully.",
         token,
         fullName: newUser.fullName,
+        kidsName: newUser.kidsName,
         _id: newUser._id,
       });
     }
@@ -50,6 +52,7 @@ export const login = async (req, res) => {
       message: "Logged in successfully.",
       token,
       fullName: user.fullName,
+      kidsName: user.kidsName,
       _id: user._id,
     });
   } catch (error) {

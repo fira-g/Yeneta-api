@@ -6,6 +6,10 @@ const parentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    kidsName: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       minlength: 6,

@@ -7,6 +7,9 @@ const quizSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: Tutorial,
     },
+    level:{
+      type:Number
+    },
     questions: [
       {
         question: {
@@ -18,6 +21,9 @@ const quizSchema = new mongoose.Schema(
         correctAnswer: {
           type: String,
         },
+        explanation:{
+          type:String
+        }
       },
     ],
   },

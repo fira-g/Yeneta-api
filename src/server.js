@@ -5,7 +5,7 @@ import authRoutes from "./routes/auth.route.js";
 import eventRoutes from "./routes/events.route.js";
 import passport from "passport";
 import { initializeGoogleAuth } from "./controllers/google.auth.controller.js";
-
+import storyRoutes from "./routes/stories.route.js";
 dotenv.config();
 
 const app = express();
@@ -15,6 +15,7 @@ initializeGoogleAuth();
 
 app.use("/api/parents", authRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/stories", storyRoutes);
 
 const port = process.env.PORT || 3000;
 
