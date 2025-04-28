@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import generateToken from "../services/generateToken.js";
+import generateToken from "../utils/generateToken.js";
 import {
   login,
   passwordResetRequest,
@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/register", signup);
 router.post("/login", login);
 router.post("/password/reset/request", passwordResetRequest);
-router.post("/password/reset/:token", resetPassword);
+router.post("/password/reset", resetPassword);
 
 router.get("/password/reset/:token", (req, res) => {
   res.send("reset ur password");

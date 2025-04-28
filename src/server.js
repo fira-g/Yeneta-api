@@ -6,9 +6,10 @@ import eventRoutes from "./routes/events.route.js";
 import passport from "passport";
 import { initializeGoogleAuth } from "./controllers/google.auth.controller.js";
 import storyRoutes from "./routes/stories.route.js";
+import errorHandler from "./middlewares/errorHandler.middleware.js";
 dotenv.config();
 
-const app = express();
+export const app = express();
 app.use(express.json());
 app.use(passport.initialize());
 initializeGoogleAuth();
@@ -16,6 +17,7 @@ initializeGoogleAuth();
 app.use("/api/parents", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stories", storyRoutes);
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
