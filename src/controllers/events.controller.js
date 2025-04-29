@@ -16,10 +16,23 @@ export const createEvent = tryCatch(async (req, res) => {
   validateCreateEvent(req.body, res);
   const { title, description, dueDate, attendanceCapacity } = req.body;
 
+  if (req.file) {
+    await cloudinary.uploader.upload(req.file.path, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw new customError(500, err.message);
+      }
+
+      image_url = result.secure_url;
+    });
+  } else {
+    console.log("no image selected");
+  }
   const newEvent = new Event({
     title,
     description,
     dueDate,
+    image: image_url,
     attendanceCapacity,
   });
 
@@ -55,4 +68,15 @@ export const rsvp = tryCatch(async (req, res) => {
   };
   await sendEmail(rsvpSuccess);
   res.status(200).json({ message: "Seat reserved successfully." });
+});
+export const getMyEvents = tryCatch(async (req, res) => {
+  const events = await Event.find({});
+  const myEvents = events.filter((event) =>
+    event?.bookedParents?.some((parent) => parent.parentID.equals(req.user._id))
+  );
+
+  if (myEvents.length == 0 || !myEvents) {
+    throw new customError(404, "No events yet.");
+  }
+  res.status(200).json({ events: myEvents });
 });

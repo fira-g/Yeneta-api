@@ -30,7 +30,7 @@ export const signup = tryCatch(async (req, res) => {
   });
   if (newUser) {
     await newUser.save();
-    const { password: pass, ...userToSend } = user._doc;
+    const { password: pass, ...userToSend } = newUser._doc;
     const token = await generateToken(newUser._id);
     res.status(201).json({
       message: "Account created successfully.",
