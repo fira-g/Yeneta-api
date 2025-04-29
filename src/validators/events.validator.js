@@ -10,6 +10,7 @@ const createEventSchema = Joi.object({
   description: Joi.string().min(20).required(),
   attendanceCapacity: Joi.number().greater(0).required(),
   dueDate: Joi.date().greater(Date.now()).required(),
+  location: Joi.string(),
 });
 
 export const validateCreateEvent = (payload, res) => {

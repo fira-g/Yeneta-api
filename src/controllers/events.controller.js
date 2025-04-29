@@ -3,6 +3,7 @@ import customError from "../utils/customError.js";
 import sendEmail from "../utils/sendEmail.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import { validateCreateEvent } from "../validators/events.validator.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const getEvents = tryCatch(async (req, res) => {
   const events = await Event.find({}).sort({ dueDate: 1 });
@@ -15,7 +16,7 @@ export const getEvents = tryCatch(async (req, res) => {
 export const createEvent = tryCatch(async (req, res) => {
   validateCreateEvent(req.body, res);
   const { title, description, dueDate, attendanceCapacity } = req.body;
-
+  let image_url;
   if (req.file) {
     await cloudinary.uploader.upload(req.file.path, function (err, result) {
       if (err) {
