@@ -21,6 +21,9 @@ const parentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    profilePic: {
+      type: String,
+    },
     resetToken: {
       type: String,
     },

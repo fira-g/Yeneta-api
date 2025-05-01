@@ -6,8 +6,10 @@ import {
   passwordResetRequest,
   resetPassword,
   signup,
+  updateProfile,
 } from "../controllers/auth.controller.js";
-
+import { protectRout } from "../middlewares/auth.middleware.js";
+import upload from "../middlewares/multer.middleware.js";
 const baseUrl = process.env.FRONTEND_URL;
 const router = express.Router();
 
@@ -15,6 +17,12 @@ router.post("/register", signup);
 router.post("/login", login);
 router.post("/password/reset/request", passwordResetRequest);
 router.post("/password/reset", resetPassword);
+router.post(
+  "/update-profile",
+  protectRout,
+  upload.single("image"),
+  updateProfile
+);
 
 router.get("/password/reset/:token", (req, res) => {
   res.send("reset ur password");

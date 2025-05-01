@@ -15,6 +15,10 @@ const tutorialSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    level: {
+      type: Number,
+      required: true,
+    },
     image: {
       type: String, //url from cloudinary
       default: "",

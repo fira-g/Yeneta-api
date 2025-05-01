@@ -18,8 +18,10 @@ const scoresSchema = new mongoose.Schema(
     },
     remark: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }
 );
+
+const Score = mongoose.model("Score", scoresSchema);
+export default Score;

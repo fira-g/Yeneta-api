@@ -11,6 +11,7 @@ import {
 } from "../validators/auth.validator.js";
 import { tryCatch } from "../utils/tryCatch.js";
 import customError from "../utils/customError.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const signup = tryCatch(async (req, res) => {
   validateSignup(req.body, res);
@@ -132,4 +133,24 @@ export const resetPassword = tryCatch(async (req, res) => {
   user.resetToken = null;
   await user.save();
   res.json({ message: "password updated successfully!" });
+});
+
+export const updateProfile = tryCatch(async (req, res) => {
+  let image_url;
+
+  if (req.file) {
+    await cloudinary.uploader.upload(req.file.path, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw new customError(500, err.message);
+      }
+
+      image_url = result.secure_url;
+    });
+  } else {
+    console.log("no image selected");
+  }
+  req.user.profilePic = image_url;
+  await req.user.save();
+  res.status(200).json({ message: "Profile updated.", user: req.user });
 });

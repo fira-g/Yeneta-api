@@ -3,27 +3,25 @@ import Tutorial from "./tutorial.model.js";
 
 const quizSchema = new mongoose.Schema(
   {
-    sourceTutorialId: {
-      type: mongoose.Types.ObjectId,
-      ref: Tutorial,
+    subject: {
+      type: String,
+      required: true,
     },
-    level:{
-      type:Number
+    level: {
+      type: Number,
     },
     questions: [
       {
         question: {
           type: String,
         },
-        options: {
-          type: String,
-        },
+        options: [String],
         correctAnswer: {
           type: String,
         },
-        explanation:{
-          type:String
-        }
+        explanation: {
+          type: String,
+        },
       },
     ],
   },
