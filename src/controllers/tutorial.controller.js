@@ -11,7 +11,6 @@ export const getTutorialsBySubject = tryCatch(async (req, res) => {
 
   const tutorials = await Tutorial.find({
     subject: subject.toUpperCase(),
-    level,
   });
   res.status(200).json({ tutorials });
 });
