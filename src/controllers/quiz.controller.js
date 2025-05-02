@@ -4,8 +4,8 @@ import { tryCatch } from "../utils/tryCatch.js";
 import customError from "../utils/customError.js";
 
 export const getAllQuizzes = tryCatch(async (req, res) => {
-  const { subject, level } = req.query;
-  const quizzes = await Quiz.find({ subject, level });
+  const { subject } = req.query;
+  const quizzes = await Quiz.find({ subject: subject.toUpperCase() });
   res.status(200).json({ quizzes });
 });
 
@@ -63,7 +63,7 @@ export const createQuiz = tryCatch(async (req, res) => {
   }
 
   const quiz = new Quiz({
-    subject,
+    subject: subject.toUpperCase(),
     level,
     questions,
   });
