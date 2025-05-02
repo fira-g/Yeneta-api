@@ -7,7 +7,7 @@ import { validateUploadStory } from "../validators/stories.validation.js";
 
 export const getStoriesByCategory = tryCatch(async (req, res) => {
   const { category } = req.params;
-  const stories = await Story.find({ category });
+  const stories = await Story.find({ category: category.toUpperCase() });
   if (stories.length == 0 || !stories) {
     throw new customError(404, "No match found");
   }
@@ -33,7 +33,7 @@ export const uploadStory = tryCatch(async (req, res) => {
   }
   const newStory = new Story({
     title,
-    category,
+    category: category.toUpperCase(),
     image: image_url,
     text,
   });

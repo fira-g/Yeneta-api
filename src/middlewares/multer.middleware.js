@@ -6,14 +6,18 @@ const storage = multer.diskStorage({
   },
 });
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
+  if (
+    file.mimetype.startsWith("image/") ||
+    file.mimetype.startsWith("video/") ||
+    file.mimetype.startsWith("audio/")
+  ) {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
 
-const maxSize = 3 * 1024 * 1024; //3MB
+const maxSize = 7 * 1024 * 1024; //3MB
 
 const upload = multer({
   storage: storage,

@@ -14,6 +14,7 @@ import {
   authRateLimiter,
   rateLimiter,
 } from "./middlewares/rateLimiter.middleware.js";
+import songsRoute from "./routes/songs.route.js";
 dotenv.config();
 
 export const app = express();
@@ -28,6 +29,7 @@ app.use("/api/stories", storyRoutes);
 app.use("/api/tutorials", tutorialRoutes);
 app.use("/api/quizes", quizRoutes);
 app.use("/api/rank", rankRoutes);
+app.use("/api/songs", songsRoute);
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
