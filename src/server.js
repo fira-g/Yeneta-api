@@ -10,6 +10,10 @@ import errorHandler from "./middlewares/errorHandler.middleware.js";
 import tutorialRoutes from "./routes/tutorials.route.js";
 import quizRoutes from "./routes/quiz.route.js";
 import rankRoutes from "./routes/ranking.route.js";
+import {
+  authRateLimiter,
+  rateLimiter,
+} from "./middlewares/rateLimiter.middleware.js";
 dotenv.config();
 
 export const app = express();
@@ -17,7 +21,8 @@ app.use(express.json());
 app.use(passport.initialize());
 initializeGoogleAuth();
 
-app.use("/api/parents", authRoutes);
+app.use(rateLimiter);
+app.use("/api/parents", authRateLimiter, authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stories", storyRoutes);
 app.use("/api/tutorials", tutorialRoutes);
