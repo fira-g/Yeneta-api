@@ -54,7 +54,7 @@ export const rsvp = tryCatch(async (req, res) => {
   const event = await Event.findById(req.params.eventId);
   const bookedList = event.bookedParents;
   if (!(event.attendanceCapacity > bookedList.length)) {
-    throw customError(400, "All seats are taken");
+    throw new customError(400, "All seats are taken");
   }
   bookedList.push({
     parentID: user._id,
