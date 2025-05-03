@@ -6,9 +6,9 @@ const validator = (schema, payload) => {
 };
 
 const uploadStorySchema = Joi.object({
-  title: Joi.string().min(4).max(15).required(),
+  title: Joi.string().min(4).max(25).required(),
   category: Joi.string(),
-  text: Joi.string().min(10).max(300),
+  text: Joi.string().min(10).max(2000),
 });
 
 export const validateUploadStory = (payload) => {

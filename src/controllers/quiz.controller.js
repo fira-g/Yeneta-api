@@ -61,13 +61,25 @@ export const createQuiz = tryCatch(async (req, res) => {
       .status(400)
       .json({ error: "Tutorial ID, level, and questions are required" });
   }
+  let image_url;
+  if (req.file) {
+    await cloudinary.uploader.upload(req.file.path, function (err, result) {
+      if (err) {
+        console.log(err);
+        throw new customError(500, err.message);
+      }
+
+      image_url = result.secure_url;
+    });
+  }
 
   const quiz = new Quiz({
     subject: subject.toUpperCase(),
     level,
     questions,
+    image: image_url,
   });
-
+  console.log(quiz);
   await quiz.save();
   res.status(201).json({ message: "Quiz created successfully", quiz });
 });
