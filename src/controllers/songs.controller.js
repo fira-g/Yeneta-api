@@ -23,7 +23,7 @@ export const uploadSong = tryCatch(async (req, res) => {
 
     audio_url = result.secure_url;
   } else {
-    console.log("no image selected");
+    console.log("no audio selected");
   }
   const newSong = new Song({
     title,

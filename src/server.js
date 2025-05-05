@@ -10,6 +10,7 @@ import errorHandler from "./middlewares/errorHandler.middleware.js";
 import tutorialRoutes from "./routes/tutorials.route.js";
 import quizRoutes from "./routes/quiz.route.js";
 import rankRoutes from "./routes/ranking.route.js";
+import customError from "./utils/customError.js";
 import {
   authRateLimiter,
   rateLimiter,
@@ -24,28 +25,15 @@ app.use(express.json());
 app.use(passport.initialize());
 initializeGoogleAuth();
 
-//app.use(rateLimiter);
-app.use("/api/parents", /*authRateLimiter,*/ authRoutes);
+app.use(rateLimiter);
+app.use("/api/parents", authRateLimiter, authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stories", storyRoutes);
 app.use("/api/tutorials", tutorialRoutes);
 app.use("/api/quizes", quizRoutes);
 app.use("/api/rank", rankRoutes);
 app.use("/api/songs", songsRoute);
-app.post("/img", upload.single("image"), async (req, res) => {
-  let image_url;
-  if (req.file) {
-    await cloudinary.uploader.upload(req.file.path, function (err, result) {
-      if (err) {
-        console.log(err);
-        throw new customError(500, err.message);
-      }
 
-      image_url = result.secure_url;
-    });
-  }
-  res.send(image_url);
-});
 app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
